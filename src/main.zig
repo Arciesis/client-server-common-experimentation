@@ -1,1 +1,1 @@
-pub const ipParser = @import("utils.zig").parseArg;
+pub const parseArgsAsIp = @import("utils.zig").parseArgsAsIp;
