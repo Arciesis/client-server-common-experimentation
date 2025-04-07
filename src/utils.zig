@@ -1,9 +1,9 @@
 const std = @import("std");
 
-pub fn parseArg() []const u8 {
+pub fn parseArgsAsIp() []const u8 {
     var ip: []const u8 = "0.0.0.0";
     if (std.os.argv.len != 3) {
-        return ip;
+        @panic("You should pass IP via CLI arguments!");
     }
 
     var i: usize = 1;
