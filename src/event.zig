@@ -1,4 +1,5 @@
 const std = @import("std");
+const Order = std.math.Order;
 
 const EventType = enum(u8) {
     // TODO: Add to this in function of my needs.
@@ -27,5 +28,22 @@ pub fn Event(comptime T: type) type {
                 .payload = payload,
             };
         }
+
+        pub const EventContext = struct {
+            pub fn compare(ctx: @This(), a: Event(T), b: Event(T)) std.math.Order {
+                _ = ctx;
+
+                if (@intFromEnum(a.priority) != @intFromEnum(b.priority)) {
+                    return std.math.order(@intFromEnum(a.priority), @intFromEnum(b.priority));
+                }
+
+                const time_diff = if (a.timestamp > b.timestamp) a.timestamp - b.timestamp else b.timestamp - a.timestamp;
+                if (time_diff < 1000) {
+                    return std.math.order(a.timestamp, b.timestamp);
+                } else {
+                    return std.math.order(b.timestamp, a.timestamp);
+                }
+            }
+        };
     };
 }
